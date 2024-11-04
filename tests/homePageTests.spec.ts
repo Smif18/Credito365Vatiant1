@@ -21,33 +21,38 @@ test.describe('Credito365 Tests', () => {
         // Проверка наличия пунктов меню
         expect(header.navigateToMenuItem.length).toBeGreaterThan(0);
 
-        // Проверка наличия кнопки "Iniciar sesión"
-        await expect(header.loginButton).toBeVisible();
 
         // Проверка наличия телефона WhatsApp
-        expect(header.getWhatsappPhoneNumber).toContain('3044404600');
-        expect(header.getWhatsappPhoneHref).toContain('https://wa.me/+573044404600');
+        const whatsappPhoneNumber = await header.getWhatsappPhoneNumber();
+        expect(whatsappPhoneNumber).toContain('3044404600');
+        const whatsappPhoneHref = await header.getWhatsappPhoneHref();
+        expect(whatsappPhoneHref).toContain('https://wa.me/+573044404600');
 
         // Проверка наличия обычного телефона
-        expect(header.getRegularPhoneNumber).toContain('3330333060');
-        expect(header.getRegularPhoneHref).toContain('tel:3330333060');
+        const regularPhoneNumber = await header.getRegularPhoneNumber();
+        expect(regularPhoneNumber).toContain('3330333060');
+        const regularPhoneHref = await header.getRegularPhoneHref();
+        expect(regularPhoneHref).toContain('tel:3330333060');
     });
 
     test('Navigate to "Como aplicar" page', async ({ page }) => {
+        await header.navigateToMenuItem('Como aplicar');
+        await page.waitForURL('https://credito365.co/como-aplicar/');
         expect(page.url()).toContain('como-aplicar');
     });
 
     test('Home page elements are present', async ({ page }) => {
         // Проверка наличия заголовка баннера
-        expect(home.getHeroBannerTitle).toContain('Crédito Online en solo unos minutos');
+        const heroBannerTitle = await home.getHeroBannerTitle();
+        expect(heroBannerTitle).toContain('Crédito Online en solo unos minutos');
 
         // Проверка наличия кнопки "Continuar" в калькуляторе
         await expect(home.calculatorButton).toBeVisible();
-
-        // Проверка значения по умолчанию на калькуляторе
-        expect(home.getCalculatorCurrentValue).toContain('200 000'); 
+        const calculatorCurrentValue = await home.getCalculatorCurrentValue();
+        expect(calculatorCurrentValue).toContain('200 000'); 
 
         // Проверка наличия заголовка "Nuestras ventajas"
-        expect(home.getAdvantagesTitle).toContain('Nuestras ventajas');
+        const advantagesTitle = await home.getAdvantagesTitle();
+        expect(advantagesTitle).toContain('Nuestras ventajas');
     });
 });

@@ -1,4 +1,4 @@
-import { Page, Locator, } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class HeaderElements {
     readonly page: Page;
@@ -40,16 +40,27 @@ export class HeaderElements {
         await this.loginButton.click();
     }
 
+    async loginButtonVisibility() {
+        await expect(this.loginButton).toBeVisible();
+    }
+
     async clickHamburgerButton() {
         await this.hamburgerButton.click();
     }
     async getWhatsappPhoneNumber() {
         return await this.whatsappPhone.textContent();
+    }
 
+    async wappPhoneVisibility() {
+        await expect(this.whatsappPhone).toBeVisible();
     }
 
     async getRegularPhoneNumber() {
         return await this.regularPhone.textContent();
+    }
+
+    async regularPhoneVisibility() {
+        await expect(this.regularPhone).toBeVisible();
     }
 
     async getWhatsappPhoneHref() {
